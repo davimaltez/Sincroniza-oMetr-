@@ -13,54 +13,75 @@ typedef struct station{
 } station;
 
 
-void station_init(station *s){
-    s->qtd_pessoas_fila = 0;
-    s->qtd_assentos_disponiveis = 0;
-    s->passageiros_embarcando = 0;
+void station_init(station *station){
+    station->qtd_pessoas_fila = 0;
+    station->qtd_assentos_disponiveis = 0;
+    station->passageiros_embarcando = 0;
 
-    pthread_mutex_init(&s->mutex, NULL);
+    pthread_mutex_init(&station->mutex, NULL);
 
-    pthread_cond_init(&s->cond_passageiros,NULL);
-    pthread_cond_init(&s->cond_vagao,NULL);
+    pthread_cond_init(&station->cond_passageiros,NULL);
+    pthread_cond_init(&station->cond_vagao,NULL);
 
 }
 
 //Passageiro esperando
 
-void station_wait_for_car(station *s){
+void station_wait_for_car(station *station){
 
-    pthread_mutex_lock(&s->mutex);
+    pthread_mutex_lock(&station->mutex);
 
-    s->qtd_pessoas_fila++;
+    station->qtd_pessoas_fila++;
 
     
-    while(s->qtd_assentos_disponiveis == 0){
+    while(station->qtd_assentos_disponiveis == 0){
 
-        pthread_cond_wait(&s->cond_passageiros, &s->mutex);
+        pthread_cond_wait(&station->cond_passageiros, &station->mutex);
 
     }
 
-    s->qtd_pessoas_fila --;
-    s->qtd_assentos_disponiveis--;
-    s->passageiros_embarcando++;
+    station->qtd_pessoas_fila --;
+    station->qtd_assentos_disponiveis--;
+    station->passageiros_embarcando++;
 
-    pthread_mutex_unlock(&s->mutex);
+    pthread_mutex_unlock(&station->mutex);
 
     return;
 }
 
-void station_on_board(station *s){
+void station_on_board(station *station){
 
-    pthread_mutex_lock(&s->mutex);
+    pthread_mutex_lock(&station->mutex);
 
-    s->passageiros_embarcando--;
+    station->passageiros_embarcando--;
 
-    pthread_mutex_unlock(&s->mutex);
+    pthread_mutex_unlock(&station->mutex);
 
 
     //Sinaliza que o vagão pode seguirr
-    if(s->qtd_pessoas_fila == 0 && s->passageiros_embarcando == 0){
+    if(station->qtd_pessoas_fila == 0 && station->passageiros_embarcando == 0){
 
-        pthread_cond_signal(&s->cond_vagao);
+        pthread_cond_signal(&station->cond_vagao);
+
     }
+}
+
+
+//count = quantidade de assentos disponíveis no carro
+void station_load_car(station *station, int count){
+
+    pthread_mutex_lock(&station->mutex);
+
+    station->qtd_assentos_disponiveis = count;
+
+    
+    while(station->qtd_assentos_disponiveis > 0 && qtd_pessoas_fila > 0){
+
+        pthread_cond_wait(&station->cond_vagao, &station->mutex);
+    }
+    
+    pthread_mutex_unlock(&station->mutex);
+
+    return;
+
 }
