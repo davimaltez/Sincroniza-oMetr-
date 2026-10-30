@@ -16,7 +16,7 @@ typedef struct station{
 void station_init(station *s){
     s->qtd_pessoas_fila = 0;
     s->qtd_assentos_disponiveis = 0;
-    s->qtd_assentos_ocupados = 0;
+    s->passageiros_embarcando = 0;
 
     pthread_mutex_init(&s->mutex, NULL);
 
@@ -29,7 +29,7 @@ void station_init(station *s){
 
 void station_wait_for_car(station *s){
 
-    pthread_mutex_lock(pthread_mutex_t &s->mutex);
+    pthread_mutex_lock(&s->mutex);
 
     s->qtd_pessoas_fila++;
 
@@ -42,9 +42,25 @@ void station_wait_for_car(station *s){
 
     s->qtd_pessoas_fila --;
     s->qtd_assentos_disponiveis--;
-    s->qtd_assentos_ocupados++;
+    s->passageiros_embarcando++;
 
     pthread_mutex_unlock(&s->mutex);
 
     return;
+}
+
+void station_on_board(station *s){
+
+    pthread_mutex_lock(&s->mutex);
+
+    s->passageiros_embarcando--;
+
+    pthread_mutex_unlock(&s->mutex);
+
+
+    //Sinaliza que o vagão pode seguirr
+    if(s->qtd_pessoas_fila == 0 && s->passageiros_embarcando == 0){
+
+        pthread_cond_signal(&s->cond_vagao);
+    }
 }
