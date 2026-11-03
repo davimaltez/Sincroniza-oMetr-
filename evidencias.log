@@ -1,0 +1,93 @@
+o sync_car
+[01m[Ksync_car.c:[m[K In function ‘[01m[Kstation_load_car[m[K’:
+[01m[Ksync_car.c:79:52:[m[K [01;31m[Kerror: [m[K‘[01m[Kqtd_pessoas_fila[m[K’ undeclared (first use in this function)
+   79 |     while(station->qtd_assentos_disponiveis > 0 && [01;31m[Kqtd_pessoas_fila[m[K > 0){
+      |                                                    [01;31m[K^~~~~~~~~~~~~~~~[m[K
+[01m[Ksync_car.c:79:52:[m[K [01;36m[Knote: [m[Keach undeclared identifier is reported only once for each function it appears in
+[01m[Kcc1:[m[K [01;31m[Kfatal error: [m[Kmain.c: No such file or directory
+compilation terminated.
+make: *** [makefile:2: all] Error 1
+[?2004h]0;davi@computadordavi: ~/Implementacao4/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao4/dmcv[00m$ make
+[?2004l
+gcc -pthread sync_car.c main.c -o sync_car
+[01m[Kcc1:[m[K [01;31m[Kfatal error: [m[Kmain.c: No such file or directory
+compilation terminated.
+make: *** [makefile:2: all] Error 1
+[?2004h]0;davi@computadordavi: ~/Implementacao4/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao4/dmcv[00m$ clear
+[?2004l
+[H[2J[3J[?2004h]0;davi@computadordavi: ~/Implementacao4/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao4/dmcv[00m$ make
+[?2004l
+gcc -pthread sync_car.c sync_car_runner.c -o sync_car
+[01m[Ksync_car_runner.c:17:10:[m[K [01;31m[Kfatal error: [m[Ksync_car.h: No such file or directory
+   17 | #include [01;31m[K"sync_car.h"[m[K
+      |          [01;31m[K^~~~~~~~~~~~[m[K
+compilation terminated.
+make: *** [makefile:2: all] Error 1
+[?2004h]0;davi@computadordavi: ~/Implementacao4/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao4/dmcv[00m$ clear
+[?2004l
+[H[2J[3J[?2004h]0;davi@computadordavi: ~/Implementacao4/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao4/dmcv[00m$ make clean
+[?2004l
+rm -f sync_car
+[?2004h]0;davi@computadordavi: ~/Implementacao4/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao4/dmcv[00m$ make
+[?2004l
+gcc -pthread sync_car.c sync_car_runner.c -o sync_car
+[01m[Ksync_car.c:[m[K In function ‘[01m[Kstation_init[m[K’:
+[01m[Ksync_car.c:8:12:[m[K [01;31m[Kerror: [m[K‘[01m[Kstation[m[K’ has no member named ‘[01m[Kpassageiros_embarcando[m[K’
+    8 |     station[01;31m[K->[m[Kpassageiros_embarcando = 0;
+      |            [01;31m[K^~[m[K
+[01m[Ksync_car.c:[m[K In function ‘[01m[Kstation_wait_for_car[m[K’:
+[01m[Ksync_car.c:34:12:[m[K [01;31m[Kerror: [m[K‘[01m[Kstation[m[K’ has no member named ‘[01m[Kpassageiros_embarcando[m[K’
+   34 |     station[01;31m[K->[m[Kpassageiros_embarcando++;
+      |            [01;31m[K^~[m[K
+[01m[Ksync_car.c:[m[K In function ‘[01m[Kstation_on_board[m[K’:
+[01m[Ksync_car.c:45:12:[m[K [01;31m[Kerror: [m[K‘[01m[Kstation[m[K’ has no member named ‘[01m[Kpassageiros_embarcando[m[K’
+   45 |     station[01;31m[K->[m[Kpassageiros_embarcando--;
+      |            [01;31m[K^~[m[K
+[01m[Ksync_car.c:51:49:[m[K [01;31m[Kerror: [m[K‘[01m[Kstation[m[K’ has no member named ‘[01m[Kpassageiros_embarcando[m[K’
+   51 |     if(station->qtd_pessoas_fila == 0 && station[01;31m[K->[m[Kpassageiros_embarcando == 0){
+      |                                                 [01;31m[K^~[m[K
+make: *** [makefile:2: all] Error 1
+[?2004h]0;davi@computadordavi: ~/Implementacao4/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao4/dmcv[00m$ clear
+[?2004l
+[H[2J[3J[?2004h]0;davi@computadordavi: ~/Implementacao4/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao4/dmcv[00m$ make
+[?2004l
+gcc -pthread sync_car.c sync_car_runner.c -o sync_car
+[?2004h]0;davi@computadordavi: ~/Implementacao4/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao4/dmcv[00m$ [7m./sync_car[27m./sync_car
+[?2004l
+car entering station with 3 free seats
+Error: station_load_car failed
+
+
+
+
+Script started on 2026-10-30 14:23:00-03:00 [TERM="xterm-256color" TTY="/dev/pts/5" COLUMNS="153" LINES="12"]
+[?2004h]0;davi@computadordavi: ~/Implementacao4/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao4/dmcv[00m$ exit./sync_car[6Pmake./sync_car
+[?2004l
+Error: Failed to complete after 1 seconds. Something's wrong, or your system is terribly slow. Possible error hint: [station_load_car() did not return immediately when no waiting passengers]
+[?2004h]0;davi@computadordavi: ~/Implementacao4/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao4/dmcv[00m$ exit
+[?2004l
+exit
+
+Script done on 2026-10-30 14:23:05-03:00 [COMMAND_EXIT_CODE="1"]
+
+
+
+Script started on 2026-11-03 15:34:47-03:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="139" LINES="14"]
+[?2004h]0;davi@computadordavi: ~/Implementacao4/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao4/dmcv[00m$ script -a evidencias.logclear[K[1Pmake
+[?2004lgcc -pthread sync_car.c sync_car_runner.c -o sync_car
+[?2004h]0;davi@computadordavi: ~/Implementacao4/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao4/dmcv[00m$ makescript -a evidencias.logclear[K[1Pmake./sync_car 2>&1 | tee -a evidencias.logclear[K[1Pmakecd dmcv[3Pexit./sync_car
+[?2004lcar entering station with 3 free seats
+car departed station with 3 new passenger(s) (expected 3)
+car entering station with 43 free seats
+car departed station with 43 new passenger(s) (expected 43)
+car entering station with 16 free seats
+car departed station with 16 new passenger(s) (expected 16)
+car entering station with 35 free seats
+car departed station with 35 new passenger(s) (expected 35)
+car entering station with 21 free seats
+car departed station with 3 new passenger(s) (expected 3)
+Looks good!
+[?2004h]0;davi@computadordavi: ~/Implementacao4/dmcv[01;32mdavi@computadordavi[00m:[01;34m~/Implementacao4/dmcv[00m$ exit
+[?2004lexit
+
+Script done on 2026-11-03 15:35:01-03:00 [COMMAND_EXIT_CODE="0"]

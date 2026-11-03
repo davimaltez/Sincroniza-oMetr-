@@ -1,17 +1,6 @@
 #include <pthread.h>
 #include <stdio.h>
-
-typedef struct station{
-
-    int qtd_pessoas_fila;
-    int qtd_assentos_disponiveis;
-    int qtd_assentos_ocupados;
-    pthread_mutex_t mutex;
-    pthread_cond_t cond_passageiros;
-    pthread_cond_t cond_vagao;
-
-} station;
-
+#include "sync_car.h"
 
 void station_init(station *station){
     station->qtd_pessoas_fila = 0;
@@ -55,15 +44,16 @@ void station_on_board(station *station){
 
     station->passageiros_embarcando--;
 
-    pthread_mutex_unlock(&station->mutex);
-
-
-    //Sinaliza que o vagão pode seguirr
-    if(station->qtd_pessoas_fila == 0 && station->passageiros_embarcando == 0){
-
+    
+    
+    // Condição de partida é quando está sem vagas OU a fila está vazia) + ninguém no corredor
+    if((station->qtd_assentos_disponiveis == 0 || station->qtd_pessoas_fila == 0) && station->passageiros_embarcando == 0){
+        
         pthread_cond_signal(&station->cond_vagao);
-
+        
     }
+
+    pthread_mutex_unlock(&station->mutex);
 }
 
 
@@ -74,13 +64,17 @@ void station_load_car(station *station, int count){
 
     station->qtd_assentos_disponiveis = count;
 
+    pthread_cond_broadcast(&station->cond_passageiros);
     
-    while(station->qtd_assentos_disponiveis > 0 && qtd_pessoas_fila > 0){
+    while((station->qtd_assentos_disponiveis > 0 && station->qtd_pessoas_fila > 0) || station->passageiros_embarcando > 0){
 
         pthread_cond_wait(&station->cond_vagao, &station->mutex);
+
     }
+
+    station->qtd_assentos_disponiveis = 0;
     
-    pthread_mutex_unlock(&station->mutex);
+    pthread_mutex_unlock(&station->mutex);  
 
     return;
 
