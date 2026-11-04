@@ -40,9 +40,6 @@ O vagão parte quando **não há ninguém no corredor** (`passageiros_embarcando
 
 Restrições do enunciado atendidas: apenas as funções `pthread_mutex_*` e `pthread_cond_*` permitidas, sem semáforos, um único lock por estação e sem busy-wait (toda espera é feita com `pthread_cond_wait` dentro de um `while`).
 
-## Sistema operacional
-
-Implementado e testado em **[PREENCHER: ex. Ubuntu 22.04 / WSL2 / macOS]**, com **GCC [PREENCHER: versão]**. Funciona em Linux, Unix e macOS.
 
 ## Como compilar
 
@@ -99,4 +96,4 @@ Em caso de erro, uma mensagem é escrita em `stderr` e o programa encerra com c�
 
 ## Relatório
 
-O relatório em PDF está neste repositório: `[login].pdf`.
+O relatório em PDF está neste repositório: `[dmcv].pdf`.
