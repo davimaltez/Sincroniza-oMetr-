@@ -3,3 +3,5 @@ all:
 
 clean:
 	rm -f sync_car
+
+.PHONY: all clean
